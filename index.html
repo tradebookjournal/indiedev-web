@@ -2,99 +2,682 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <title>TradeBook Journal — Legal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#151315" />
+  <meta name="description" content="IndieDev — independent ideas, digital experiments and useful things for the web." />
+  <title>IndieDev — Ideas. Built Independently.</title>
 
   <style>
-    body {
-      font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Helvetica, Arial, sans-serif;
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 48px 24px;
-      line-height: 1.6;
-      color: #171717;
-      background: #f7f7f5;
+    :root {
+      --bg: #111011;
+      --bg-soft: #181617;
+      --card: rgba(255,255,255,.055);
+      --card-border: rgba(255,255,255,.11);
+      --text: #f8f4f2;
+      --muted: #aaa2a0;
+      --accent: #d96868;
+      --accent-soft: #ba5a5a;
+      --mint: #a5d6a7;
+      --white-soft: #e9e2df;
+      --shadow: 0 30px 80px rgba(0,0,0,.42);
     }
 
-    .card {
-      background: #ffffff;
-      border: 1px solid #e3e3df;
-      border-radius: 16px;
-      padding: 32px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(217,104,104,.14), transparent 28%),
+        radial-gradient(circle at 85% 30%, rgba(165,214,167,.07), transparent 24%),
+        linear-gradient(145deg, #0f0e0f 0%, #171415 52%, #100f10 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .orb {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,104,104,.13), transparent 68%);
+      filter: blur(20px);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      transition: left .5s ease-out, top .5s ease-out;
+    }
+
+    .nav {
+      position: relative;
+      z-index: 5;
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      font-size: 20px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), #a84e59);
+      box-shadow: 0 10px 30px rgba(217,104,104,.25);
+      font-size: 14px;
+      color: white;
+    }
+
+    .domain-pill {
+      padding: 9px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+      color: #d6ceca;
+      font-size: 13px;
+      backdrop-filter: blur(14px);
+    }
+
+    main { position: relative; z-index: 1; }
+
+    .hero {
+      width: min(1160px, calc(100% - 40px));
+      min-height: calc(100vh - 90px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 70px;
+      padding: 45px 0 90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #d9d1ce;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      animation: rise .8s ease both;
+    }
+
+    .eyebrow i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 18px rgba(165,214,167,.75);
+      animation: pulse 2s infinite;
     }
 
     h1 {
-      margin-top: 0;
-      margin-bottom: 8px;
+      max-width: 760px;
+      font-size: clamp(58px, 8vw, 105px);
+      line-height: .9;
+      letter-spacing: -.075em;
+      font-weight: 850;
+      animation: rise .9s .08s ease both;
     }
 
-    .tagline {
-      color: #6b6b6b;
-      margin-top: 0;
+    h1 .accent {
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
     }
 
-    a {
-      color: #d96868;
-      text-decoration: none;
-      font-weight: 600;
+    h1 .accent::after {
+      content: "";
+      position: absolute;
+      height: 7px;
+      width: 72%;
+      left: 4%;
+      bottom: -10px;
+      border-radius: 99px;
+      background: var(--mint);
+      transform: rotate(-2deg);
+      opacity: .85;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .hero-copy {
+      max-width: 570px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.65;
+      animation: rise .9s .16s ease both;
     }
 
-    .links {
-      margin-top: 28px;
+    .actions {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+      animation: rise .9s .24s ease both;
     }
 
-    .links a {
+    .button {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 20px;
+      border-radius: 13px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,.045);
+      color: var(--white-soft);
+      font-weight: 700;
+      transition: transform .25s, background .25s, border-color .25s;
+    }
+
+    .button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-105%);
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,.16), transparent);
+      transition: transform .6s;
+    }
+
+    .button:hover::before { transform: translateX(105%); }
+    .button:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.2); }
+
+    .button.primary {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, #d96868, #b65459);
+      box-shadow: 0 15px 35px rgba(186,90,90,.23);
+    }
+
+    .button.primary:hover { box-shadow: 0 18px 45px rgba(186,90,90,.34); }
+
+    /* Floating visual */
+    .visual {
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      perspective: 1200px;
+      animation: visualIn 1.1s .15s ease both;
+    }
+
+    .halo {
+      position: absolute;
+      width: 410px;
+      height: 410px;
+      border-radius: 50%;
+      border: 1px solid rgba(217,104,104,.18);
+      box-shadow:
+        0 0 100px rgba(217,104,104,.08),
+        inset 0 0 90px rgba(217,104,104,.04);
+      animation: breathe 5s ease-in-out infinite;
+    }
+
+    .halo::before,
+    .halo::after {
+      content: "";
+      position: absolute;
+      inset: 38px;
+      border-radius: inherit;
+      border: 1px dashed rgba(165,214,167,.17);
+      animation: spin 28s linear infinite;
+    }
+
+    .halo::after {
+      inset: 82px;
+      border-style: solid;
+      border-color: rgba(217,104,104,.11);
+      animation-direction: reverse;
+      animation-duration: 18s;
+    }
+
+    .glass-card {
+      width: min(390px, 88vw);
+      min-height: 430px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+      transform: rotateY(-11deg) rotateX(5deg) rotateZ(2deg);
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .5s ease;
+    }
+
+    .visual:hover .glass-card {
+      transform: rotateY(-4deg) rotateX(2deg) rotateZ(0deg) translateY(-8px);
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -90px;
+      top: -100px;
+      border-radius: 50%;
+      background: rgba(217,104,104,.25);
+      filter: blur(45px);
+    }
+
+    .window-bar {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 30px;
+    }
+
+    .window-bar span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+    }
+
+    .mini-label {
+      color: #aaa1a0;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .16em;
+      font-weight: 800;
+    }
+
+    .card-domain {
+      margin-top: 12px;
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: -.055em;
+    }
+
+    .card-line {
+      width: 65px;
+      height: 4px;
+      border-radius: 20px;
+      background: var(--accent);
+      margin: 22px 0;
+    }
+
+    .card-text {
+      color: #aaa4a1;
+      line-height: 1.7;
+      font-size: 14px;
+      max-width: 280px;
+    }
+
+    .code-lines {
+      margin-top: 38px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .code-line {
+      height: 9px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .code-line::after {
+      content: "";
       display: block;
-      margin: 14px 0;
+      width: var(--w);
+      height: 100%;
+      background: linear-gradient(90deg, rgba(217,104,104,.7), rgba(165,214,167,.55));
+      border-radius: inherit;
+      animation: loading 3s ease-in-out infinite alternate;
     }
+
+    .floating-tag {
+      position: absolute;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(22,20,21,.72);
+      backdrop-filter: blur(16px);
+      border-radius: 13px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+      font-size: 12px;
+      color: #d9d1ce;
+      font-weight: 700;
+    }
+
+    .tag-one { right: -12px; top: 95px; animation: float 4s ease-in-out infinite; }
+    .tag-two { left: -25px; bottom: 100px; animation: float 4.5s .7s ease-in-out infinite; }
+    .tag-two b { color: var(--mint); }
+
+    .section {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 40px 0 110px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(32px, 5vw, 54px);
+      letter-spacing: -.055em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 390px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .feature {
+      min-height: 210px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,.035);
+      border-radius: 22px;
+      padding: 25px;
+      transition: transform .3s ease, background .3s ease, border-color .3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-7px);
+      background: rgba(255,255,255,.055);
+      border-color: rgba(217,104,104,.28);
+    }
+
+    .feature-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: rgba(217,104,104,.12);
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-weight: 900;
+    }
+
+    .feature h3 { font-size: 18px; margin-bottom: 10px; }
+    .feature p { color: var(--muted); line-height: 1.65; font-size: 14px; }
 
     footer {
-      margin-top: 32px;
-      color: #6b6b6b;
-      font-size: 14px;
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 26px 0 35px;
+      display: flex;
+      justify-content: space-between;
+      color: #777170;
+      font-size: 12px;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      pointer-events: none;
+      z-index: 100;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      opacity: 0;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes visualIn {
+      from { opacity: 0; transform: scale(.9) translateX(30px); }
+      to { opacity: 1; transform: scale(1) translateX(0); }
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-11px); }
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: .65; }
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(.97); opacity: .75; }
+      50% { transform: scale(1.03); opacity: 1; }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes loading {
+      from { transform: translateX(-8%); }
+      to { transform: translateX(12%); }
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding-top: 50px;
+      }
+
+      .visual { min-height: 430px; }
+      .grid { grid-template-columns: 1fr; }
+      .section-heading { display: block; }
+      .section-heading p { margin-top: 12px; }
+    }
+
+    @media (max-width: 520px) {
+      .nav, .hero, .section, footer { width: min(100% - 28px, 1160px); }
+      .nav { padding-top: 18px; }
+      .domain-pill { display: none; }
+      h1 { font-size: 58px; }
+      .visual { min-height: 390px; }
+      .halo { width: 320px; height: 320px; }
+      .glass-card { min-height: 370px; }
+      .tag-one { right: -3px; top: 65px; }
+      .tag-two { left: -3px; bottom: 60px; }
+      footer { display: block; line-height: 1.8; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="card">
-    <h1>TradeBook Journal</h1>
+  <div class="orb" id="orb"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
 
-    <p class="tagline">
-      Trade. Learn. Level Up.
-    </p>
+  <header class="nav">
+    <a class="brand" href="#">
+      <span class="brand-mark">ID</span>
+      <span>IndieDev</span>
+    </a>
+    <div class="domain-pill">indiedev.co.in</div>
+  </header>
 
-    <p>
-      This page provides legal and account-related information
-      for TradeBook Journal.
-    </p>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><i></i> Independent digital studio</div>
 
-    <div class="links">
-      <a href="privacy.html">
-        Privacy Policy
-      </a>
+        <h1>
+          Ideas<br />
+          <span class="accent">built</span><br />
+          differently.
+        </h1>
 
-      <a href="terms.html">
-        Terms of Use
-      </a>
+        <p class="hero-copy">
+          Welcome to <strong style="color:#e9e2df;">IndieDev</strong> — a home for
+          independent experiments, useful products, creative technology and
+          ideas that deserve to exist.
+        </p>
 
-      <a href="delete-account.html">
-        Account &amp; Data Deletion
-      </a>
-    </div>
+        <div class="actions">
+          <a class="button primary" href="#explore">Explore the space <span>↓</span></a>
+          <a class="button" href="mailto:hello@indiedev.co.in">Say hello ↗</a>
+        </div>
+      </div>
 
-    <footer>
-      TradeBook Journal
-    </footer>
+      <div class="visual" aria-hidden="true">
+        <div class="halo"></div>
+
+        <div class="glass-card">
+          <div class="window-bar"><span></span><span></span><span></span></div>
+
+          <div class="mini-label">Currently building</div>
+          <div class="card-domain">indiedev.co.in</div>
+          <div class="card-line"></div>
+
+          <p class="card-text">
+            Small team energy. Big curiosity. Shipping useful things one
+            experiment at a time.
+          </p>
+
+          <div class="code-lines">
+            <div class="code-line" style="--w:78%"></div>
+            <div class="code-line" style="--w:52%"></div>
+            <div class="code-line" style="--w:91%"></div>
+            <div class="code-line" style="--w:64%"></div>
+          </div>
+        </div>
+
+        <div class="floating-tag tag-one">✦ Made with curiosity</div>
+        <div class="floating-tag tag-two"><b>●</b>&nbsp; independent by design</div>
+      </div>
+    </section>
+
+    <section class="section" id="explore">
+      <div class="section-heading">
+        <h2>A little bit of everything.</h2>
+        <p>
+          IndieDev isn't boxed into one category. It's a place to turn
+          interesting problems into simple, useful digital experiences.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="feature">
+          <div class="feature-icon">✦</div>
+          <h3>Experiments</h3>
+          <p>Ideas get tested, shaped and sometimes become something much bigger.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">↗</div>
+          <h3>Useful products</h3>
+          <p>Simple tools and experiences designed around things people actually need.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">⌁</div>
+          <h3>Creative tech</h3>
+          <p>Technology, design and a little obsession with making things feel right.</p>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <span>© <span id="year"></span> IndieDev</span>
+    <span>indiedev.co.in · Built independently.</span>
+  </footer>
+
+  <script>
+    // Current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Soft cursor glow / ambient movement
+    const orb = document.getElementById("orb");
+    const dot = document.getElementById("cursorDot");
+    let targetX = window.innerWidth * .5;
+    let targetY = window.innerHeight * .35;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    window.addEventListener("mousemove", (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      dot.style.opacity = "1";
+      dot.style.left = e.clientX + "px";
+      dot.style.top = e.clientY + "px";
+    });
+
+    function animateOrb() {
+      currentX += (targetX - currentX) * .035;
+      currentY += (targetY - currentY) * .035;
+      orb.style.left = currentX + "px";
+      orb.style.top = currentY + "px";
+      requestAnimationFrame(animateOrb);
+    }
+    animateOrb();
+
+    // Tiny tilt interaction for the main glass card
+    const visual = document.querySelector(".visual");
+    const card = document.querySelector(".glass-card");
+
+    if (window.matchMedia("(pointer:fine)").matches) {
+      visual.addEventListener("mousemove", (e) => {
+        const rect = visual.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - .5;
+        const y = (e.clientY - rect.top) / rect.height - .5;
+        card.style.transform =
+          `rotateY(${x * 14 - 4}deg) rotateX(${y * -8 + 2}deg) rotateZ(${x * 1.5}deg) translateY(-5px)`;
+      });
+
+      visual.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+      });
+    }
+  </script>
 </body>
 </html>
