@@ -282,7 +282,14 @@ const projects=[{
   icon:"assets/tradebook-icon.png",  // paste your app icon here
   short:"TB"
 }];
-const screenshots=["./assets/tradebook-1.png","./assets/tradebook-2.png","./assets/tradebook-3.png","./assets/tradebook-4.png","./assets/tradebook-5.png","./assets/tradebook-6.png"];
+const screenshots = [
+    "./assets/tradebook-1.png",
+    "./assets/tradebook-2.png",
+    "./assets/tradebook-3.png",
+    "./assets/tradebook-4.png",
+    "./assets/tradebook-5.png",
+    "./assets/tradebook-6.png"
+];
 const D="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/";
 const skills=[{n:".NET",i:"dotnetcore/dotnetcore-original.svg"},{n:"C#",i:"csharp/csharp-original.svg"},{n:"React JS",i:"react/react-original.svg"},{n:"React Native",i:"react/react-original.svg"},{n:"SQL Server",i:"microsoftsqlserver/microsoftsqlserver-plain.svg"},{n:"SQLite",i:"sqlite/sqlite-original.svg"},{n:"REST APIs",e:"🔌"},{n:"Fintech",e:"💹"}];
 const roles=["fintech apps.","mobile apps.","APIs and databases.","things that ship."];
@@ -296,7 +303,16 @@ $('#rView').href=RESUME_VIEW;$('#rDl').href=RESUME_DOWNLOAD;
 if(RESUME_DOWNLOAD===RESUME_VIEW)$('#rDl').setAttribute('download','Chetan_Kawarkhe.pdf');
 $('#feat').innerHTML=projects.map(p=>`${ico(p)}<div class="t"><b>${p.name}</b><small>Live app</small></div><a class="btn sage sm liquid" href="${p.link}">${LQ}<span>Open</span><span class="ic">→</span></a>`).join('');
 $('#projList').innerHTML=projects.map(p=>`<article class="proj liquid rv">${LQ}${ico(p,'lgi')}<div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><a class="btn sage liquid" href="${p.link}">${LQ}<span>Open ${p.name}</span><span class="ic">→</span></a></div></article>`).join('');
-$('#shots').innerHTML=screenshots.map((s,i)=>`<button class="shot" data-i="${i}" aria-label="Zoom screenshot ${i+1}"><span class="ph">Add ${s}</span><img src="${s}" alt="TradeBook Journal screenshot ${i+1}" loading="lazy" onerror="this.remove()"><span class="zh">⤢</span></button>`).join('');
+<!-- $('#shots').innerHTML=screenshots.map((s,i)=>`<button class="shot" data-i="${i}" aria-label="Zoom screenshot ${i+1}"><span class="ph">Add ${s}</span><img src="${s}" alt="TradeBook Journal screenshot ${i+1}" loading="lazy" onerror="this.remove()"><span class="zh">⤢</span></button>`).join(''); -->
+ $('#shots').innerHTML = screenshots.map((s, i) => `
+    <button class="shot" data-i="${i}" aria-label="Zoom screenshot ${i+1}">
+        <span class="ph">Add ${s}</span>
+        <img src="${s}" 
+             alt="TradeBook Journal screenshot ${i+1}" 
+             loading="lazy">
+        <span class="zh">⤢</span>
+    </button>
+`).join('');
 const sic=(s,e)=>s.i?`<img src="${D+s.i}" alt="" onerror="this.remove()">`:`<em>${s.e}</em>`;
 $('#skills').innerHTML=skills.map(s=>`<span>${s.i?sic(s):s.e}${s.n}</span>`).join('');
 $('#vx').innerHTML=[...skills,...skills,...skills].map(s=>`<div class="vi">${sic(s)}<span>${s.n}</span></div>`).join('');
