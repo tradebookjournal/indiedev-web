@@ -47,7 +47,7 @@ h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:10px}
 
 /* logo */
 .lg{font:800 1.6rem 'Syne';letter-spacing:-.03em;text-decoration:none;display:inline-flex;align-items:baseline}
-.lg .a{color:}.lg .b{color:var(--rust)}
+.lg .a{color:var(--coral)}.lg .b{color:var(--rust)}
 .lg .d{width:.3em;height:.3em;background:var(--sage);border-radius:50%;margin-left:.12em;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
 .lg:hover .d{transform:translateY(-.5em) scale(1.3)}
 .lg:hover .a,.lg:hover .b{animation:wob .5s}
@@ -70,123 +70,6 @@ header.nav.stuck .bar{box-shadow:0 12px 30px -14px rgba(0,0,0,.35)}
 .burger i:nth-child(1){top:14px}.burger i:nth-child(2){top:19px}.burger i:nth-child(3){top:24px}
 .open .burger i:nth-child(1){top:19px;transform:rotate(45deg)}.open .burger i:nth-child(2){opacity:0}.open .burger i:nth-child(3){top:19px;transform:rotate(-45deg)}
 
- /* =========================
-   RESUME NAV BUTTON
-   ========================= */
-
-.resume-wrap{
-  position:relative;
-  display:flex;
-  align-items:center;
-}
-
-.resume-btn{
-  position:relative;
-  width:88px;
-  height:32px;
-  border-radius:99px;
-  overflow:hidden;
-
-  background:var(--coral);
-  border:1px solid var(--coral);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-
-  transition:
-    width .5s cubic-bezier(.3,1.3,.5,1),
-    box-shadow .35s ease;
-}
-
-.resume-label{
-  position:relative;
-  z-index:3;
-
-  color:#fff;
-  font:700 .78rem 'Syne';
-
-  transition:
-    opacity .2s ease,
-    transform .4s cubic-bezier(.3,1.3,.5,1);
-}
-
-.resume-options{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-
-  opacity:0;
-  pointer-events:none;
-
-  transition:opacity .2s ease;
-}
-
-.resume-option{
-  flex:1;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-
-  text-decoration:none;
-
-  font:700 .7rem 'Syne';
-
-  color:#fff;
-
-  transition:
-    transform .45s cubic-bezier(.3,1.3,.5,1),
-    filter .25s ease;
-}
-
-.resume-view{
-  background:var(--rust);
-  transform:translateX(-100%);
-}
-
-.resume-download{
-  background:var(--sage);
-  color:#1f2b19;
-  transform:translateX(100%);
-}
-
-.resume-btn:hover{
-  width:164px;
-  box-shadow:0 8px 24px -12px rgba(0,0,0,.45);
-}
-
-.resume-btn:hover .resume-label{
-  opacity:0;
-  transform:scale(.65);
-}
-
-.resume-btn:hover .resume-options{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.resume-btn:hover .resume-view,
-.resume-btn:hover .resume-download{
-  transform:translateX(0);
-}
-
-.resume-option:hover{
-  filter:brightness(1.08);
-}
-
-.resume-arrow{
-  font-size:.9rem;
-  transition:transform .3s ease;
-}
-
-.resume-download:hover .resume-arrow{
-  transform:translateY(3px);
-}
 /* buttons */
 .btn{--fill:var(--rust);display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:14px;font:700 .98rem 'Syne';text-decoration:none;border:2px solid var(--coral);cursor:pointer;transition:transform .25s,color .3s,border-color .3s}
 .btn.fill{background:var(--coral);color:#fff}
@@ -231,7 +114,6 @@ h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em}
 @media(max-width:820px){.sg{grid-template-columns:1fr}.vx{height:400px}}
 /* icon */
 .ico{width:60px;height:60px;border-radius:15px;flex:none;display:grid;place-items:center;background:var(--coral);color:#fff;font:800 1.3rem 'Syne';overflow:hidden}
-
 .ico img{width:100%;height:100%;object-fit:cover;display:block}
 .ico.lgi{width:104px;height:104px;border-radius:26px;font-size:2.2rem}
 
