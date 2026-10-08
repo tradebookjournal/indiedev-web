@@ -9,6 +9,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* name greeting */
+.hello{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:1.1rem;color:var(--mute);margin-bottom:14px}
+.wave{display:inline-block;transform-origin:70% 70%;animation:wave 2.6s ease-in-out infinite}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}50%{transform:rotate(8deg)}}
+.nm{position:relative;font:800 1.4rem 'Syne';letter-spacing:-.01em;color:var(--ink);padding-bottom:4px}
+.nm::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--coral),var(--sage));transform:scaleX(0);transform-origin:left;transition:transform .9s .7s cubic-bezier(.2,.8,.2,1)}
+.hello.in .nm::after{transform:scaleX(1)}
 :root{--coral:#D96868;--rust:#BA5A5A;--sage:#A4CE8B;--bg:#FAF5F2;--card:#fff;--ink:#2A1F1F;--mute:#756565;--line:#E8D9D3}
 :root[data-theme=dark]{--bg:#151111;--card:#201919;--ink:#F6ECE8;--mute:#A99A97;--line:#352B2B}
 *{box-sizing:border-box;margin:0}
@@ -57,13 +64,245 @@ h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:10px}
 header.nav{position:sticky;top:10px;z-index:50;padding:0 clamp(8px,1.5vw,20px)}
 .bar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 20px;border-radius:99px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);transition:box-shadow .3s}
 header.nav.stuck .bar{box-shadow:0 12px 30px -14px rgba(0,0,0,.35)}
-.menu{position:relative;display:flex;gap:2px}
-.menu a{position:relative;z-index:1;padding:8px 18px;border-radius:99px;text-decoration:none;font-weight:500;color:var(--mute);transition:color .25s}
-.menu a.on,.menu a:hover{color:#fff}
-.ind{position:absolute;top:0;height:100%;border-radius:99px;background:var(--coral);transition:left .4s cubic-bezier(.3,1.3,.5,1),width .4s,opacity .3s;opacity:0}
+/* nav menu + sliding pill */
+.menu{
+  position:relative;
+  display:flex;
+  gap:2px;
+}
+
+.menu a{
+  position:relative;
+  z-index:2;
+  padding:8px 18px;
+  border-radius:99px;
+  text-decoration:none;
+  font-weight:500;
+  color:var(--mute);
+  transition:color .25s ease;
+}
+
+.menu a.on,
+.menu a:hover{
+  color:#fff;
+}
+
+.ind{
+  position:absolute;
+  z-index:1;
+  top:0;
+  left:0;
+  height:100%;
+  border-radius:99px;
+  background:var(--coral);
+  pointer-events:none;
+  opacity:0;
+
+  transition:
+    left .45s cubic-bezier(.3,1.3,.5,1),
+    width .45s cubic-bezier(.3,1.3,.5,1),
+    opacity .25s ease;
+}
+/* footer */
+footer{position:relative;margin-top:70px;background:var(--rust);color:#fff;overflow:hidden}
+.fwave{position:absolute;left:0;top:-1px;width:200%;height:46px;color:var(--bg);animation:fw 14s linear infinite}
+@keyframes fw{to{transform:translateX(-50%)}}
+.fg{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:34px;padding-top:96px;padding-bottom:20px}
+.fb p{margin:14px 0 22px;max-width:38ch;color:rgba(255,255,255,.85)}
+footer .lg{font-size:2rem}
+footer .lg .a{color:#fff}footer .lg .b{color:var(--sage)}footer .lg .d{background:#fff}
+footer h4{font:700 .8rem 'Syne';letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:14px}
+footer ul{padding:0}footer li{list-style:none;margin-bottom:9px}
+footer a.fl{color:rgba(255,255,255,.9);text-decoration:none;padding-bottom:2px;background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .35s,color .3s}
+footer a.fl:hover{background-size:100% 2px;color:#fff}
+.btn.fw{background:var(--sage);border-color:var(--sage);color:#1f2b19;--fill:#fff}
+.btn.fw:hover{color:#1f2b19;border-color:#fff}
+.big{font:800 clamp(4rem,17vw,15rem)/.9 'Syne';letter-spacing:-.04em;text-align:center;white-space:nowrap;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.3);margin:26px 0 0;user-select:none}
+.big span{display:inline-block;transition:transform .45s cubic-bezier(.3,1.6,.5,1),color .3s,-webkit-text-stroke-color .3s}
+.big span:hover{transform:translateY(-16px) rotate(-4deg);color:var(--sage);-webkit-text-stroke-color:var(--sage)}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:20px 0 26px;border-top:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.82);font-size:.92rem}
+.top{width:48px;height:48px;border-radius:50%;background:var(--sage);color:#1f2b19;display:grid;place-items:center;text-decoration:none;font-size:1.2rem;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.top:hover{transform:translateY(-6px)}
+/* hidden but present for crawlers and screen readers */
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:820px){.fg{grid-template-columns:1fr 1fr}.fb{grid-column:1/-1}}
+@media(max-width:480px){.fg{grid-template-columns:1fr}}
 .right{display:flex;align-items:center;gap:10px}
 .sw{position:relative;width:62px;height:32px;border-radius:99px;border:1px solid var(--line);background:var(--bg);cursor:pointer;padding:0;transition:background .4s}
 .sw .kn{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--coral);display:grid;place-items:center;font-size:13px;transition:transform .45s cubic-bezier(.3,1.5,.5,1),background .4s}
+
+/* =========================
+   RESUME NAV BUTTON
+   ========================= */
+
+.resume-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex:none;
+}
+
+
+/* Main pill */
+
+.resume-btn{
+  position:relative;
+  width:88px;
+  height:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-sizing:border-box;
+
+  background:var(--coral);
+  border:1px solid var(--coral);
+  border-radius:99px;
+
+  overflow:hidden;
+  cursor:pointer;
+
+  transition:
+    width .45s cubic-bezier(.3,1.3,.5,1),
+    box-shadow .3s ease,
+    transform .25s ease;
+}
+
+
+/* Resume text */
+
+.resume-label{
+  position:relative;
+  z-index:3;
+
+  color:#fff;
+  white-space:nowrap;
+
+  font:700 .78rem 'Syne';
+
+  transition:
+    opacity .2s ease,
+    transform .35s cubic-bezier(.3,1.3,.5,1);
+}
+
+
+/* View / Download area */
+
+.resume-options{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  align-items:stretch;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:opacity .2s ease;
+}
+
+
+/* Both option links */
+
+.resume-option{
+  flex:1;
+  min-width:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+
+  padding:0;
+
+  text-decoration:none;
+  white-space:nowrap;
+
+  font:700 .68rem 'Syne';
+
+  transition:
+    transform .45s cubic-bezier(.3,1.3,.5,1),
+    filter .25s ease;
+}
+
+
+/* View */
+
+.resume-view{
+  background:var(--rust);
+  color:#fff;
+
+  transform:translateX(-100%);
+}
+
+
+/* Download */
+
+.resume-download{
+  background:var(--sage);
+  color:#1f2b19;
+
+  transform:translateX(100%);
+}
+
+
+/* =========================
+   HOVER
+   ========================= */
+
+.resume-btn:hover{
+  width:166px;
+
+  box-shadow:
+    0 8px 22px -12px rgba(0,0,0,.45);
+}
+
+
+/* Hide Resume */
+
+.resume-btn:hover .resume-label{
+  opacity:0;
+  transform:scale(.65);
+}
+
+
+/* Reveal options */
+
+.resume-btn:hover .resume-options{
+  opacity:1;
+  pointer-events:auto;
+}
+
+
+/* Slide both sides into place */
+
+.resume-btn:hover .resume-view,
+.resume-btn:hover .resume-download{
+  transform:translateX(0);
+}
+
+
+/* Individual hover */
+
+.resume-option:hover{
+  filter:brightness(1.08);
+}
+
+
+/* Download arrow */
+
+.resume-arrow{
+  display:inline-block;
+  font-size:.9rem;
+
+  transition:
+    transform .3s cubic-bezier(.3,1.3,.5,1);
+}
+
+.resume-download:hover .resume-arrow{
+  transform:translateY(3px);
+}
 [data-theme=dark] .sw{background:#2b2222}[data-theme=dark] .sw .kn{transform:translateX(30px);background:var(--sage)}
 .burger{display:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer;position:relative}
 .burger i{position:absolute;left:11px;width:16px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
@@ -84,7 +323,8 @@ header.nav.stuck .bar{box-shadow:0 12px 30px -14px rgba(0,0,0,.35)}
 /* hero */
 .hero{padding:36px 0 40px}
 .hg{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:center}
-h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em}
+h1{font-size:clamp(1.5rem,2.8vw,2.3rem);letter-spacing:-.02em;font-weight:700}
+@media(max-width:520px){h1{min-height:2.3em}}
 .role{color:var(--coral);display:inline-block;min-width:1ch}
 .caret{display:inline-block;width:3px;height:.9em;background:var(--sage);margin-left:3px;vertical-align:-.05em;animation:blink .8s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
@@ -113,7 +353,7 @@ h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em}
 .hero{position:relative;overflow:hidden}.hero .hg{position:relative;z-index:1}
 @media(max-width:820px){.sg{grid-template-columns:1fr}.vx{height:400px}}
 /* icon */
-.ico{width:60px;height:60px;border-radius:15px;flex:none;display:grid;place-items:center;color:#fff;font:800 1.3rem 'Syne';overflow:hidden}
+.ico{width:60px;height:60px;border-radius:15px;flex:none;display:grid;place-items:center;background:var(--coral);color:#fff;font:800 1.3rem 'Syne';overflow:hidden}
 .ico img{width:100%;height:100%;object-fit:cover;display:block}
 .ico.lgi{width:104px;height:104px;border-radius:26px;font-size:2.2rem; background:transparent;}
 
@@ -158,27 +398,163 @@ h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em}
 .skills img{width:20px;height:20px}
 .skills span:hover{background:var(--coral);color:#fff;border-color:var(--coral);transform:translateY(-4px) rotate(-2deg)}
 
-footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mute);font-size:.95rem}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
-footer a{margin-left:16px;text-decoration:none}footer a:hover{color:var(--coral)}
 
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
 .rv.in{opacity:1;transform:none}
 
 @media(max-width:820px){
- .hg{grid-template-columns:1fr}
- .burger{display:block}
- .menu{position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px;opacity:0;visibility:hidden;transform:translateY(-10px);transition:.3s}
- .open .menu{opacity:1;visibility:visible;transform:none}
- .menu a{padding:12px 16px}.menu a.on{background:var(--coral)}.ind{display:none}
- .bar{position:relative}
- .proj{grid-template-columns:1fr;padding:26px}
- section{padding:54px 0}
+
+  /* Existing mobile navbar */
+  .hg{grid-template-columns:1fr}
+  .burger{display:block}
+
+  .menu{
+    position:absolute;
+    top:calc(100% + 10px);
+    left:0;
+    right:0;
+    flex-direction:column;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:8px;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-10px);
+    transition:.3s;
+  }
+
+  .open .menu{
+    opacity:1;
+    visibility:visible;
+    transform:none;
+  }
+
+  .menu a{padding:12px 16px}
+  .menu a.on{background:var(--coral)}
+  .ind{display:none}
+  .bar{position:relative}
+
+  .proj{
+    grid-template-columns:1fr;
+    padding:26px;
+  }
+
+  section{padding:54px 0}
+
+
+  /* =========================
+     MOBILE NAVBAR SIZING
+     ========================= */
+
+  .bar{
+    padding:7px 8px 7px 14px;
+    gap:7px;
+  }
+
+  /* Smaller IndieDev logo */
+  .lg{
+    font-size:1.25rem;
+  }
+
+  /* Keep right-side controls compact */
+  .right{
+    gap:6px;
+  }
+
+  /* Smaller Resume button */
+  .resume-btn{
+    width:70px;
+    height:30px;
+  }
+
+  .resume-label{
+    font-size:.68rem;
+  }
+
+  /*
+     On mobile we don't use :hover.
+     Tapping Resume opens the options.
+     JS class = resume-open
+  */
+  .resume-btn.resume-open{
+    width:146px;
+  }
+
+  .resume-btn.resume-open .resume-label{
+    opacity:0;
+    transform:scale(.65);
+  }
+
+  .resume-btn.resume-open .resume-options{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .resume-btn.resume-open .resume-view,
+  .resume-btn.resume-open .resume-download{
+    transform:translateX(0);
+  }
+
+  .resume-option{
+    font-size:.62rem;
+  }
+
+  /* Smaller theme switch */
+  .sw{
+    width:48px;
+    height:28px;
+  }
+
+  .sw .kn{
+    width:22px;
+    height:22px;
+    top:2px;
+    left:2px;
+    font-size:11px;
+  }
+
+  [data-theme=dark] .sw .kn{
+    transform:translateX(20px);
+  }
+
+  /* Smaller hamburger */
+  .burger{
+    width:34px;
+    height:34px;
+  }
+
+  .burger i{
+    left:9px;
+    width:14px;
+  }
+
+  .burger i:nth-child(1){top:11px}
+  .burger i:nth-child(2){top:16px}
+  .burger i:nth-child(3){top:21px}
+
+  .open .burger i:nth-child(1){
+    top:16px;
+  }
+
+  .open .burger i:nth-child(3){
+    top:16px;
+  }
 }
 @media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+/* page-wide hover dots: sit behind everything, hidden until the cursor is near */
+#pg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main{position:relative;z-index:1}
+footer{z-index:1}
+
+/* screenshots: no visible scrollbar */
+.shots{scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
+.shots::-webkit-scrollbar{display:none}
+.shot img{-webkit-user-drag:none;user-select:none}
 </style>
 </head>
 <body>
+  <canvas id="pg" aria-hidden="true"></canvas>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"/></filter></defs></svg>
 
@@ -262,11 +638,12 @@ footer a{margin-left:16px;text-decoration:none}footer a:hover{color:var(--coral)
 <main id="top">
 <div class="hero" id="hero"><canvas id="wv"></canvas><div class="wrap hg">
   <div>
+    <p class="hello rv"><span class="wave">👋</span> Hi, I'm <b class="nm">Chetan Kawarkhe</b></p>
     <h1 class="rv">I build <span class="role" id="role"></span><span class="caret"></span></h1>
     <p class="lead rv" style="--d:.1s">Software developer with 3+ years across .NET, React, React Native and SQL. I take products from database to the app in your pocket.</p>
     <div class="cta rv" style="--d:.2s">
-      <a class="btn fill liquid" id="rView" href="#" target="_blank" rel="noopener"><span class="lq"><i></i><i></i><i></i></span><span>View resume</span></a>
-      <a class="btn ghost dl liquid" id="rDl" href="#"><span class="lq"><i></i><i></i><i></i></span><span>Download resume</span><span class="ic">⬇</span></a>
+      <a class="btn fill liquid" id="rView" href="Chetan_Kawarkhe.pdf" target="_blank" rel="noopener"><span class="lq"><i></i><i></i><i></i></span><span>View resume</span></a>
+      <a class="btn ghost dl liquid" id="rDl" href="Chetan_Kawarkhe.pdf"><span class="lq"><i></i><i></i><i></i></span><span>Download resume</span><span class="ic">⬇</span></a>
     </div>
   </div>
   <aside class="glance liquid rv" style="--d:.25s"><span class="lq"><i></i><i></i><i></i></span>
@@ -312,13 +689,41 @@ footer a{margin-left:16px;text-decoration:none}footer a:hover{color:var(--coral)
 </div></section>
 </main>
 
-<footer><div class="wrap">
-  <div>© <span id="yr"></span> IndieDev</div>
-  <div>
-    <a href="tradebook/">TradeBook Journal</a>
-    <!-- set these two to your exact existing URLs -->
-    <a href="tradebook/privacy.html">Privacy Policy</a>
-    <a href="tradebook/terms.html">Terms</a>
+<footer>
+  <svg class="fwave" viewBox="0 0 2880 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V22C180 44 540 0 720 22C900 44 1260 0 1440 22C1620 44 1980 0 2160 22C2340 44 2700 0 2880 22V0Z" fill="currentColor"/></svg>
+
+  <div class="wrap fg">
+    <div class="fb">
+      <a class="lg" href="#top" aria-label="IndieDev home"><span class="a">Indie</span><span class="b">Dev</span><span class="d"></span></a>
+      <p>Software developer building fintech and mobile products with .NET, React and React Native.</p>
+      <!-- change to your real email -->
+      <a class="btn fw liquid" href="mailto:chetankawarkhe@gmail.com"><span class="lq"><i></i><i></i><i></i></span><span>Say hello</span><span class="ic">→</span></a>
+    </div>
+    <div><h4>Navigate</h4><ul>
+      <li><a class="fl" href="#top">Home</a></li>
+      <li><a class="fl" href="#stack">Stack</a></li>
+      <li><a class="fl" href="#projects">Projects</a></li>
+      <li><a class="fl" href="#experience">Experience</a></li>
+      <li><a class="fl" href="Chetan_Kawarkhe.pdf" target="_blank" rel="noopener">Resume</a></li></ul></div>
+    <div><h4>Connect</h4><ul>
+      <!-- replace with your real profile URLs -->
+      <li><a class="fl" href="https://github.com/chetankawarkhe" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a class="fl" href="https://linkedin.com/in/chetankawarkhe" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a class="fl" href="mailto:chetankawarkhe@gmail.com">Email</a></li></ul></div>
+  </div>
+
+  <!-- TradeBook, privacy and terms: kept in the page, not shown -->
+  <nav class="sr" aria-label="App links">
+    <a href="https://indiedev.co.in/tradebook/">TradeBook Journal</a>
+    <a href="https://indiedev.co.in/tradebook/privacy.html">Privacy Policy</a>
+    <a href="https://indiedev.co.in/tradebook/terms.html">Terms</a>
+  </nav>
+
+  <div class="big" aria-hidden="true"><span>I</span><span>n</span><span>d</span><span>i</span><span>e</span><span>D</span><span>e</span><span>v</span></div>
+
+  <div class="wrap fbot">
+    <div>© <span id="yr"></span> IndieDev · Designed and built by Chetan Kawarkhe</div>
+    <a class="top" href="#top" aria-label="Back to top">↑</a>
   </div>
 </footer>
 
@@ -391,11 +796,41 @@ sw.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
 
 /* nav: mobile menu, sliding pill, scroll spy */
 const nav=$('#nav'),links=$$('#menu a'),ind=$('#ind');
+
 $('#burger').onclick=()=>nav.classList.toggle('open');
-links.forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-function mark(a){links.forEach(l=>l.classList.toggle('on',l===a));ind.style.opacity=1;ind.style.left=a.offsetLeft+'px';ind.style.width=a.offsetWidth+'px'}
-function spy(){nav.classList.toggle('stuck',scrollY>10);let cur=links[0];links.forEach(a=>{const s=$(a.getAttribute('href'));if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=a});mark(cur)}
-addEventListener('scroll',spy,{passive:true});addEventListener('resize',spy);
+
+links.forEach(a=>
+  a.addEventListener('click',()=>nav.classList.remove('open'))
+);
+
+function mark(a){
+  links.forEach(l=>l.classList.toggle('on',l===a));
+  ind.style.opacity=1;
+  ind.style.left=a.offsetLeft+'px';
+  ind.style.width=a.offsetWidth+'px';
+}
+
+function spy(){
+  nav.classList.toggle('stuck',scrollY>10);
+
+  let cur=links[0];
+
+  links.forEach(a=>{
+    const s=$(a.getAttribute('href'));
+    if(s && s.getBoundingClientRect().top<innerHeight*.4)cur=a;
+  });
+
+  mark(cur);
+}
+
+links.forEach(a=>{
+  a.addEventListener('mouseenter',()=>{
+    mark(a);
+  });
+});
+
+addEventListener('scroll',spy,{passive:true});
+addEventListener('resize',spy);
 
 /* typed role */
 let ri=0,ci=0,del=false;const rl=$('#role');
@@ -423,17 +858,76 @@ vx.addEventListener('pointermove',e=>{if(dragging){const dx=e.clientX-lx;lx=e.cl
 vx.addEventListener('pointerup',()=>dragging=false);
 
 /* water ripples in the hero */
-const cv=$('#wv'),cx=cv.getContext('2d'),hero=$('#hero'),CELL=5;let gw,gh,cur,prev,img,hOn=true;
-function wsize(){gw=Math.ceil(hero.clientWidth/CELL);gh=Math.ceil(hero.clientHeight/CELL);cv.width=gw;cv.height=gh;cur=new Float32Array(gw*gh);prev=new Float32Array(gw*gh);img=cx.createImageData(gw,gh)}
-function splash(e,p){const r=hero.getBoundingClientRect(),gx=Math.floor((e.clientX-r.left)/CELL),gy=Math.floor((e.clientY-r.top)/CELL);
- for(let y=-2;y<=2;y++)for(let x=-2;x<=2;x++){const X=gx+x,Y=gy+y;if(X>0&&Y>0&&X<gw-1&&Y<gh-1)cur[Y*gw+X]+=p}}
-function wstep(){if(hOn&&!still){const w=gw;for(let y=1;y<gh-1;y++)for(let x=1;x<w-1;x++){const i=y*w+x;prev[i]=((cur[i-1]+cur[i+1]+cur[i-w]+cur[i+w])/2-prev[i])*.982}
- [cur,prev]=[prev,cur];const d=img.data;for(let i=0;i<cur.length;i++){const v=cur[i],o=i*4,al=Math.min(150,Math.abs(v)*.7);
-  if(v>0){d[o]=217;d[o+1]=104;d[o+2]=104}else{d[o]=164;d[o+1]=206;d[o+2]=139}d[o+3]=al}cx.putImageData(img,0,0)}
- requestAnimationFrame(wstep)}
+/* hero: interactive dot grid */
+const cv=$('#wv'),cx=cv.getContext('2d'),hero=$('#hero');
+const GAP=30,RAD=150;
+let dots=[],W=0,H=0,dpr=1,hOn=true,mx=0,my=0,sx=0,sy=0,pw=0,pt=0;
+function wsize(){
+  dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=hero.clientHeight;
+  cv.width=W*dpr;cv.height=H*dpr;dots=[];
+  for(let y=GAP/2;y<H;y+=GAP)for(let x=GAP/2;x<W;x+=GAP)dots.push({x,y,ox:0,oy:0,r:1.4,k:0});
+}
+function wstep(){
+  if(hOn){
+    pw+=(pt-pw)*.12;sx+=(mx-sx)*.2;sy+=(my-sy)*.2;
+    cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
+    const base=root.dataset.theme==='dark'?'246,236,232':'42,31,31',rad=RAD*pw+.001;
+    for(const d of dots){
+      const dx=d.x-sx,dy=d.y-sy,dist=Math.hypot(dx,dy),f=Math.max(0,1-dist/rad),e=f*f*(3-2*f);
+      const tx=dist?dx/dist*e*24:0,ty=dist?dy/dist*e*24:0;
+      d.ox+=(tx-d.ox)*.14;d.oy+=(ty-d.oy)*.14;
+      d.r+=(1.4+e*4.6-d.r)*.14;d.k+=(e-d.k)*.14;
+      cx.beginPath();cx.arc(d.x+d.ox,d.y+d.oy,d.r,0,6.283);
+      cx.fillStyle=d.k>.04
+        ?(d.k<.4?`rgba(217,104,104,${.35+d.k})`:`rgba(164,206,139,${.7+d.k*.3})`)
+        :`rgba(${base},.14)`;
+      cx.fill();
+    }
+  }
+  requestAnimationFrame(wstep);
+}
 wsize();addEventListener('resize',wsize);wstep();
 new IntersectionObserver(e=>hOn=e[0].isIntersecting).observe(hero);
-hero.addEventListener('pointermove',e=>splash(e,120));hero.addEventListener('pointerdown',e=>splash(e,700));
+hero.addEventListener('pointermove',e=>{
+  const r=hero.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;
+  if(pw<.05){sx=mx;sy=my}pt=1;
+});
+hero.addEventListener('pointerleave',()=>pt=0);
+hero.addEventListener('pointerdown',()=>pw=2);
+
+/* page-wide dots: invisible until the cursor is near, skipped over the hero */
+const pg=$('#pg'),pcx=pg.getContext('2d');
+let PW,PH,pd=1,pmx=0,pmy=0,psx=0,psy=0,ppw=0,ppt=0;
+function psize(){pd=Math.min(devicePixelRatio||1,2);PW=innerWidth;PH=innerHeight;pg.width=PW*pd;pg.height=PH*pd}
+function pstep(){
+  ppw+=(ppt-ppw)*.12;psx+=(pmx-psx)*.2;psy+=(pmy-psy)*.2;
+  pcx.setTransform(pd,0,0,pd,0,0);pcx.clearRect(0,0,PW,PH);
+  if(ppw>.01){
+    const rad=RAD*ppw,docY=psy+scrollY,
+      x0=Math.floor((psx-rad-GAP/2)/GAP),x1=Math.ceil((psx+rad-GAP/2)/GAP),
+      y0=Math.floor((docY-rad-GAP/2)/GAP),y1=Math.ceil((docY+rad-GAP/2)/GAP);
+    for(let j=y0;j<=y1;j++)for(let i=x0;i<=x1;i++){
+      const gx=GAP/2+i*GAP,gy=GAP/2+j*GAP-scrollY,dx=gx-psx,dy=gy-psy,dist=Math.hypot(dx,dy),
+        f=Math.max(0,1-dist/rad),e=f*f*(3-2*f);
+      if(e<.02)continue;
+      const ox=dist?dx/dist*e*24:0,oy=dist?dy/dist*e*24:0;
+      pcx.beginPath();pcx.arc(gx+ox,gy+oy,1.4+e*4.6,0,6.283);
+      pcx.fillStyle=e<.4?`rgba(217,104,104,${Math.min(1,e*2.2)})`:`rgba(164,206,139,${Math.min(1,.5+e)})`;
+      pcx.fill();
+    }
+  }
+  requestAnimationFrame(pstep);
+}
+psize();addEventListener('resize',psize);pstep();
+document.addEventListener('pointermove',e=>{
+  const h=hero.getBoundingClientRect();
+  if(e.clientY>=h.top&&e.clientY<=h.bottom){ppt=0;return}   // hero has its own effect
+  pmx=e.clientX;pmy=e.clientY;
+  if(ppw<.05){psx=pmx;psy=pmy}
+  ppt=1;
+});
+document.addEventListener('pointerup',e=>{if(e.pointerType==='touch')ppt=0});
+document.documentElement.addEventListener('pointerleave',()=>ppt=0);
 
 /* timeline */
 const tl=$('#tl');addEventListener('scroll',()=>{const r=tl.getBoundingClientRect();tl.style.setProperty('--p',Math.max(0,Math.min(100,(innerHeight*.7-r.top)/r.height*100))+'%')},{passive:true});
@@ -456,6 +950,27 @@ st.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;const p=pt
  else if(sc>1){tx+=e.clientX-p.clientX;ty+=e.clientY-p.clientY;moved++;pts.set(e.pointerId,e);ap()}else pts.set(e.pointerId,e)});
 st.addEventListener('pointerup',e=>{pts.delete(e.pointerId);if(e.target===st&&!moved&&sc===1)close()});
 addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowRight')show(idx+1);if(e.key==='ArrowLeft')show(idx-1);if(e.key==='+')zoom(sc*1.5);if(e.key==='-')zoom(sc/1.5)});
+
+const resumeBtn = document.getElementById('resumeBtn');
+
+if (resumeBtn) {
+  resumeBtn.addEventListener('click', (e) => {
+
+    // Only use tap behavior on mobile
+    if (window.innerWidth <= 820) {
+      e.stopPropagation();
+      resumeBtn.classList.toggle('resume-open');
+    }
+
+  });
+}
+
+/* screenshots: drag with the mouse to scroll (trackpad and touch swipe already work) */
+const sh=$('#shots');let sd=false,sx0=0,sl0=0,sm=0;
+sh.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;sd=true;sm=0;sx0=e.clientX;sl0=sh.scrollLeft;sh.style.scrollSnapType='none';sh.style.cursor='grabbing'});
+addEventListener('pointermove',e=>{if(!sd)return;const d=e.clientX-sx0;if(Math.abs(d)>4)sm=1;sh.scrollLeft=sl0-d});
+addEventListener('pointerup',()=>{if(!sd)return;sd=false;sh.style.scrollSnapType='';sh.style.cursor=''});
+sh.addEventListener('click',e=>{if(sm){e.stopPropagation();e.preventDefault();sm=0}},true);
 </script>
 </body>
 </html>
