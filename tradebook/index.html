@@ -66,7 +66,7 @@ nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:50;width
 .bn b{color:var(--coral);font-weight:700}
 .links{position:relative;display:flex}
 .links a{position:relative;z-index:1;padding:7px 14px;font-size:14px;color:var(--mute);transition:color .25s}
-.links a:hover{color:#fff}
+.links a:hover,.links a.on{color:#fff}
 .pill{position:absolute;top:0;left:0;height:100%;border-radius:999px;background:linear-gradient(135deg,var(--coral),var(--rose));opacity:0;transition:all .35s cubic-bezier(.3,1.4,.5,1)}
 .right{display:flex;align-items:center;gap:8px}
 .nav-cta{background:var(--text);color:var(--bg);font-weight:600;font-size:14px;padding:8px 16px;border-radius:999px;transition:transform .25s,background .25s,color .25s}
@@ -194,9 +194,10 @@ footer::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;back
 .fb a:hover{color:var(--coral)}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(46px) scale(.98);filter:blur(6px);transition:opacity .9s cubic-bezier(.2,.8,.2,1) var(--d,0s),transform .9s cubic-bezier(.2,.8,.2,1) var(--d,0s),filter .9s var(--d,0s)}
-.rv[data-r=l]{transform:translateX(-60px)}.rv[data-r=r]{transform:translateX(60px)}.rv[data-r=s]{transform:scale(.88)}
-.rv.on{opacity:1;transform:none;filter:none}
+/* gravity drop: items fall into place, overshoot slightly and settle (no blur) */
+.rv{opacity:0;transform:translateY(-70px) rotate(-1.5deg);transition:opacity .35s ease var(--d,0s),transform .75s cubic-bezier(.34,1.56,.64,1) var(--d,0s)}
+.rv[data-r=l]{transform:translateX(-70px) rotate(-1deg)}.rv[data-r=r]{transform:translateX(70px) rotate(1deg)}.rv[data-r=s]{transform:scale(.8)}
+.rv.on{opacity:1;transform:none}
 .rv.on.done{transition:transform .25s,border-color .3s,box-shadow .3s}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none;filter:none}}
 </style>
@@ -338,9 +339,23 @@ const root=document.documentElement;
 $('#tg').onclick=()=>{const n=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('tb-theme2',n)}catch(e){}};
 
 /* nav pill */
-const lk=$('.links'),pill=$('.pill',lk);
-$$('a',lk).forEach(a=>a.addEventListener('pointerenter',()=>{pill.style.opacity=1;pill.style.left=a.offsetLeft+'px';pill.style.width=a.offsetWidth+'px'}));
-lk.addEventListener('pointerleave',()=>pill.style.opacity=0);
+const lk=$('.links'),pill=$('.pill',lk),nl=$$('a',lk);let cur=null,hov=false;
+function tgt(a){
+  nl.forEach(l=>l.classList.toggle('on',l===a));
+  if(!a){pill.style.opacity=0;return}
+  if(pill.style.opacity!=='1'){pill.style.transition='none';pill.style.left=a.offsetLeft+'px';pill.style.width=a.offsetWidth+'px';pill.offsetWidth;pill.style.transition=''}
+  pill.style.opacity=1;pill.style.left=a.offsetLeft+'px';pill.style.width=a.offsetWidth+'px';
+}
+nl.forEach(a=>a.addEventListener('pointerenter',()=>{hov=true;tgt(a)}));
+lk.addEventListener('pointerleave',()=>{hov=false;tgt(cur)});
+/* highlight the menu item of the section currently in view */
+const navSpy=new IntersectionObserver(es=>es.forEach(e=>{
+  const a=nl.find(l=>l.hash==='#'+e.target.id);
+  if(e.isIntersecting)cur=a;else if(cur===a)cur=null;
+  if(!hov)tgt(cur);
+}),{rootMargin:'-45% 0px -50% 0px'});
+['features','analytics','screens'].forEach(id=>navSpy.observe($('#'+id)));
+addEventListener('resize',()=>tgt(cur));
 
 /* features */
 const F=[
