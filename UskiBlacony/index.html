@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uski Balcony | उसकी बालकनी शायरी</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232b0a2e'/%3E%3Cpath d='M32 35s-12-7.5-12-16a6.8 6.8 0 0 1 12-4.2A6.8 6.8 0 0 1 44 19c0 8.5-12 16-12 16z' fill='%23ff5d8f'/%3E%3Cpath d='M10 41h44M14 41v13M24 41v13M32 41v13M40 41v13M50 41v13M10 54h44' stroke='%23f4a261' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#2b0a2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="loader" id="loader">
+  <div>
+    <h2>उसकी बालकनी</h2>
+    <h2 class="sub">Uski Balcony</h2>
+    <div class="pen"></div>
+    <p>कुछ बातें लफ़्ज़ों में ही अच्छी लगती हैं…</p>
+    <p class="en">Some feelings are best left in words…</p>
+  </div>
+</div>
+
+<div id="prog"></div>
+<canvas class="fx" id="fx"></canvas>
+
+<header class="nav">
+  <div class="brand"><svg viewBox="0 0 32 32"><path fill="#e0457b" d="M16 17s-6-3.800-6-8a3.400 3.400 0 0 1 6-2.100A3.400 3.400 0 0 1 22 9c0 4.200-6 8-6 8z"/><path d="M3 19h26M5 19v9M11 19v9M16 19v9M21 19v9M27 19v9M3 28h26" stroke="#e0457b" stroke-width="1.800" stroke-linecap="round" fill="none"/></svg><span class="w" id="b1">Uski</span><span id="b2">Balcony</span></div>
+  <label class="search">
+    <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 1 0 4.900 14.300l5 5 1.400-1.400-5-5A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg>
+    <input id="q" type="search" autocomplete="off">
+  </label>
+  <div class="tools">
+    <div class="seg" id="lang"><button data-l="dev">हिं</button><button data-l="roman">Abc</button><button data-l="both">दोनों</button></div>
+    <button class="ibtn" id="sound" aria-label="Sound"></button>
+    <button class="ibtn" id="theme" aria-label="Theme"></button>
+  </div>
+</header>
+
+<section class="hero"><h1 id="hero"></h1></section>
+<section class="filters" id="filters"></section>
+
+<main class="grid" id="grid"></main>
+<div id="more"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <button class="close" aria-label="Close">✕</button>
+    <div class="content"></div>
+    <div class="actions">
+      <button class="btn" id="copy"><svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11z"/></svg><span data-t="copy"></span></button>
+      <button class="btn" id="share"><svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2 .8L8.900 12.700a3 3 0 0 0 0-1.400L16 7.200A3 3 0 1 0 15 5a3 3 0 0 0 .1.700L8 9.800a3 3 0 1 0 0 4.400l7.100 4.100A3 3 0 1 0 18 16z"/></svg><span data-t="share"></span></button>
+      <button class="btn" id="download"><svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5zM19 9h-4V3H9v6H5l7 7z"/></svg><span data-t="download"></span></button>
+    </div>
+    <div class="share-menu" id="shareMenu"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
